@@ -17,6 +17,8 @@
 
 package org.apache.commons.beanutils2;
 
+import static org.junit.Assert.assertNotEquals;
+
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -134,7 +136,7 @@ public class BeanificationTestCase extends TestCase {
         // No action required
     }
 
-    /** Tests whether different threads can set beanutils instances correctly */
+    /** Tests whether different threads can set BeanUtils instances correctly */
     public void testBeanUtilsBeanSetInstance() throws Exception {
 
         final class SetInstanceTesterThread extends Thread {
@@ -196,7 +198,7 @@ public class BeanificationTestCase extends TestCase {
             public void run() {
                 try {
                     signal.setSignal(3);
-                    Converter c = (type, value) -> ConvertUtils.primitiveToWrapper(Integer.TYPE).cast(new Integer(9));
+                    final Converter c = (type, value) -> ConvertUtils.primitiveToWrapper(Integer.TYPE).cast(new Integer(9));
                     ConvertUtils.register(c, Integer.TYPE);
                     BeanUtils.setProperty(bean, "int", new Integer(1));
                 } catch (final Exception e) {
@@ -215,7 +217,7 @@ public class BeanificationTestCase extends TestCase {
         BeanUtils.setProperty(bean, "int", new Integer(1));
         assertEquals("Wrong property value (1)", 1, bean.getInt());
 
-        Converter c = (type, value) -> ConvertUtils.primitiveToWrapper(type).cast(new Integer(5));
+        final Converter c = (type, value) -> ConvertUtils.primitiveToWrapper(type).cast(new Integer(5));
         ConvertUtils.register(c, Integer.TYPE);
         BeanUtils.setProperty(bean, "int", new Integer(1));
         assertEquals("Wrong property value(2)", 5, bean.getInt());
@@ -287,7 +289,7 @@ public class BeanificationTestCase extends TestCase {
         ccll.set(beanOne);
         assertEquals("Start thread gets right instance", beanOne, ccll.get());
         ccll.unset();
-        assertTrue("Unset works", !beanOne.equals(ccll.get()));
+        assertNotEquals("Unset works", beanOne, ccll.get());
     }
 
     /**
@@ -327,18 +329,25 @@ public class BeanificationTestCase extends TestCase {
         thread.join();
 
         assertEquals("Signal not set by test thread", 2, signal.getSignal());
-        assertTrue("Different BeanUtilsBean instances per context classloader", BeanUtilsBean.getInstance() != signal.getBean());
-        assertTrue("Different ConvertUtilsBean instances per context classloader", ConvertUtilsBean.getInstance() != signal.getConvertUtils());
-        assertTrue("Different PropertyUtilsBean instances per context classloader", PropertyUtilsBean.getInstance() != signal.getPropertyUtils());
+        assertNotEquals(
+            "Different BeanUtilsBean instances per context classloader",
+            BeanUtilsBean.getInstance(),
+            signal.getBean()
+        );
+        assertNotEquals(
+            "Different ConvertUtilsBean instances per context classloader",
+            ConvertUtilsBean.getInstance(),
+            signal.getConvertUtils()
+        );
+        assertNotEquals(
+            "Different PropertyUtilsBean instances per context classloader",
+            PropertyUtilsBean.getInstance(),
+            signal.getPropertyUtils()
+        );
     }
 
     /** Tests whether class loaders and beans are released from memory */
     public void testMemoryLeak() throws Exception {
-        if (BeanUtilsBeanTestCase.isPre14JVM()) {
-            System.out.println("WARNING: CANNOT TEST MEMORY LEAK ON PRE1.4 JVM");
-            return;
-        }
-
         // many thanks to Juozas Baliuka for suggesting this methodology
         TestClassLoader loader = new TestClassLoader();
         final WeakReference<ClassLoader> loaderReference = new WeakReference<>(loader);
@@ -407,21 +416,12 @@ public class BeanificationTestCase extends TestCase {
             // create garbage:
             @SuppressWarnings("unused")
             final byte[] b = new byte[bytz];
-            bytz = bytz * 2;
+            bytz *= 2;
         }
     }
 
-    // ---- Auxillary classes
-
-    /** Tests whether class loaders and beans are released from memory by the map used by beanutils */
+    /** Tests whether class loaders and beans are released from memory by the map used by BeanUtils. */
     public void testMemoryLeak2() throws Exception {
-        // tests when the map used by beanutils has the right behavior
-
-        if (BeanUtilsBeanTestCase.isPre14JVM()) {
-            System.out.println("WARNING: CANNOT TEST MEMORY LEAK ON PRE1.4 JVM");
-            return;
-        }
-
         // many thanks to Juozas Baliuka for suggesting this methodology
         TestClassLoader loader = new TestClassLoader();
         final ReferenceQueue<Object> queue = new ReferenceQueue<>();
@@ -457,7 +457,7 @@ public class BeanificationTestCase extends TestCase {
             // create garbage:
             @SuppressWarnings("unused")
             final byte[] b = new byte[bytz];
-            bytz = bytz * 2;
+            bytz *= 2;
         }
     }
 
@@ -491,7 +491,7 @@ public class BeanificationTestCase extends TestCase {
             // create garbage:
             @SuppressWarnings("unused")
             final byte[] b = new byte[bytz];
-            bytz = bytz * 2;
+            bytz *= 2;
         }
     }
 }

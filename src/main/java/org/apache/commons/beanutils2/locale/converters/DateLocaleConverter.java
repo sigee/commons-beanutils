@@ -79,7 +79,7 @@ public class DateLocaleConverter<D extends Date> extends BaseLocaleConverter<D> 
          * Sets the leniency policy.
          *
          * @param lenient the leniency policy.
-         * @return this.
+         * @return {@code this} instance.
          */
         public B setLenient(final boolean lenient) {
             this.lenient = lenient;
@@ -186,7 +186,7 @@ public class DateLocaleConverter<D extends Date> extends BaseLocaleConverter<D> 
                 }
             } else if (thisChar == '\'') {
                 quoted = true;
-            } else if ((thisChar >= 'a' && thisChar <= 'z') || (thisChar >= 'A' && thisChar <= 'Z')) {
+            } else if (thisChar >= 'a' && thisChar <= 'z' || thisChar >= 'A' && thisChar <= 'Z') {
                 final int index = fromChars.indexOf(thisChar);
                 if (index == -1) {
                     throw new IllegalArgumentException("Illegal pattern character '" + thisChar + "'");

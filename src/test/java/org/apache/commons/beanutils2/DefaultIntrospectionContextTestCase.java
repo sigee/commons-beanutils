@@ -16,6 +16,8 @@
  */
 package org.apache.commons.beanutils2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
@@ -68,12 +70,7 @@ public class DefaultIntrospectionContextTestCase extends TestCase {
      * Tries to add a null descriptor.
      */
     public void testAddPropertyDescriptorNull() {
-        try {
-            context.addPropertyDescriptor(null);
-            fail("Could add null descriptor!");
-        } catch (final IllegalArgumentException iex) {
-            // ok
-        }
+        assertThrows(NullPointerException.class, () -> context.addPropertyDescriptor(null));
     }
 
     /**
@@ -95,7 +92,7 @@ public class DefaultIntrospectionContextTestCase extends TestCase {
         assertEquals("Wrong number of property names", count + 1, names.size());
         assertTrue("Property not found: " + PROP, names.contains(PROP));
         for (int i = 0; i < count; i++) {
-            assertTrue("Property not found: " + (PROP + i), names.contains(PROP + i));
+            assertTrue("Property not found: " + PROP + i, names.contains(PROP + i));
         }
         final PropertyDescriptor[] addedDescs = context.getPropertyDescriptors();
         assertEquals("Wrong number of added descriptors", count + 1, addedDescs.length);
@@ -108,12 +105,7 @@ public class DefaultIntrospectionContextTestCase extends TestCase {
      * Tries to add a null array with property descriptors.
      */
     public void testAddPropertyDescriptorsNull() {
-        try {
-            context.addPropertyDescriptors(null);
-            fail("Could add a null array with descriptors!");
-        } catch (final IllegalArgumentException iex) {
-            // ok
-        }
+        assertThrows(NullPointerException.class, () -> context.addPropertyDescriptors(null));
     }
 
     /**

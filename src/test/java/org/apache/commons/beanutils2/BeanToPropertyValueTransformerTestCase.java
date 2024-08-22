@@ -21,7 +21,6 @@ import junit.framework.TestCase;
 
 /**
  * Test cases for {@code BeanToPropertyValueTransformer}.
- *
  */
 public class BeanToPropertyValueTransformerTestCase extends TestCase {
 
@@ -85,7 +84,7 @@ public class BeanToPropertyValueTransformerTestCase extends TestCase {
 
         // now try an invalid key
         transformer = new BeanToPropertyValueTransformer<>("mappedProperty(bogus-key)");
-        assertEquals(null, transformer.apply(testBean));
+        assertNull(transformer.apply(testBean));
     }
 
     /**
@@ -130,7 +129,7 @@ public class BeanToPropertyValueTransformerTestCase extends TestCase {
      */
     public void testTransformWithNullInPathAndIgnoreTrue() {
         final BeanToPropertyValueTransformer<TestBean, String> transformer = new BeanToPropertyValueTransformer<>("anotherNested.stringProperty", true);
-        assertEquals(null, transformer.apply(new TestBean()));
+        assertNull(transformer.apply(new TestBean()));
     }
 
     /**
@@ -209,7 +208,6 @@ public class BeanToPropertyValueTransformerTestCase extends TestCase {
 
     /**
      * Test transform with simple String property and null value.
-     *
      */
     public void testTransformWithSimpleStringPropertyAndNullValue() {
         final BeanToPropertyValueTransformer<TestBean, String> transformer = new BeanToPropertyValueTransformer<>("stringProperty");

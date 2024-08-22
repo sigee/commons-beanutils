@@ -17,6 +17,8 @@
 
 package org.apache.commons.beanutils2;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
@@ -63,7 +65,6 @@ import junit.framework.TestSuite;
  * <li>setNestedProperty(Object,String,Object)</li>
  * <li>setSimpleProperty(Object,String,Object)</li>
  * </ul>
- *
  */
 
 public class PropertyUtilsTestCase extends TestCase {
@@ -173,7 +174,7 @@ public class PropertyUtilsTestCase extends TestCase {
      */
     private String keysToString(final Map<?, ?> map) {
         final Object[] mapKeys = map.keySet().toArray();
-        java.util.Arrays.sort(mapKeys);
+        Arrays.sort(mapKeys);
         final StringBuilder buf = new StringBuilder();
         for (int i = 0; i < mapKeys.length; ++i) {
             if (i != 0) {
@@ -224,12 +225,7 @@ public class PropertyUtilsTestCase extends TestCase {
      * Tries to add a null BeanIntrospector.
      */
     public void testAddBeanIntrospectorNull() {
-        try {
-            PropertyUtils.addBeanIntrospector(null);
-            fail("Could add null BeanIntrospector!");
-        } catch (final IllegalArgumentException iex) {
-            // ok
-        }
+        assertThrows(NullPointerException.class, () -> PropertyUtils.addBeanIntrospector(null));
     }
 
     /**
@@ -355,9 +351,6 @@ public class PropertyUtilsTestCase extends TestCase {
      * See BEANUTILS-266 for changes and reason for test
      */
     public void testExceptionFromInvoke() throws Exception {
-        if (BeanUtilsBeanTestCase.isPre14JVM()) {
-            return;
-        }
         try {
             PropertyUtils.setSimpleProperty(bean, "intProperty", "XXX");
         } catch (final IllegalArgumentException t) {
@@ -375,25 +368,8 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getPropertyDescriptor invalid arguments.
      */
     public void testGetDescriptorArguments() {
-
-        try {
-            PropertyUtils.getPropertyDescriptor(null, "stringProperty");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getPropertyDescriptor(bean, null);
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getPropertyDescriptor(null, "stringProperty"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getPropertyDescriptor(bean, null));
     }
 
     /**
@@ -571,166 +547,62 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getPropertyDescriptors invalid arguments.
      */
     public void testGetDescriptorsArguments() {
-
-        try {
-            PropertyUtils.getPropertyDescriptors(null);
-            fail("Should throw IllegalArgumentException");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getPropertyDescriptors(null));
     }
 
     /**
      * Positive getPropertyDescriptor on property {@code booleanSecond} that uses an "is" method as the getter.
      */
     public void testGetDescriptorSecond() {
-
         testGetDescriptorBase("booleanSecond", "isBooleanSecond", "setBooleanSecond");
-
     }
 
     /**
      * Positive getPropertyDescriptor on property {@code shortProperty}.
      */
     public void testGetDescriptorShort() {
-
         testGetDescriptorBase("shortProperty", "getShortProperty", "setShortProperty");
-
     }
 
     /**
      * Positive getPropertyDescriptor on property {@code stringProperty}.
      */
     public void testGetDescriptorString() {
-
         testGetDescriptorBase("stringProperty", "getStringProperty", "setStringProperty");
-
     }
 
     /**
      * Negative getPropertyDescriptor on property {@code unknown}.
      */
     public void testGetDescriptorUnknown() {
-
         testGetDescriptorBase("unknown", null, null);
-
     }
 
     /**
      * Positive getPropertyDescriptor on property {@code writeOnlyProperty}.
      */
     public void testGetDescriptorWriteOnly() {
-
         testGetDescriptorBase("writeOnlyProperty", null, "setWriteOnlyProperty");
-
     }
 
     /**
      * Corner cases on getIndexedProperty invalid arguments.
      */
     public void testGetIndexedArguments() {
-
         // Use explicit index argument
-
-        try {
-            PropertyUtils.getIndexedProperty(null, "intArray", 0);
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, null, 0);
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(null, "intArray", 0));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(bean, null, 0));
         // Use index expression
-
-        try {
-            PropertyUtils.getIndexedProperty(null, "intArray[0]");
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, "[0]");
-            fail("Should throw NoSuchMethodException 4");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 4");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, "intArray");
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 5");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(null, "intArray[0]"));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.getIndexedProperty(bean, "[0]"));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.getIndexedProperty(bean, "intArray"));
         // Use explicit index argument
-
-        try {
-            PropertyUtils.getIndexedProperty(null, "intIndexed", 0);
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, null, 0);
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(null, "intIndexed", 0));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(bean, null, 0));
         // Use index expression
-
-        try {
-            PropertyUtils.getIndexedProperty(null, "intIndexed[0]");
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, "[0]");
-            fail("Should throw NoSuchMethodException 4");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 4");
-        }
-
-        try {
-            PropertyUtils.getIndexedProperty(bean, "intIndexed");
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 5");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getIndexedProperty(null, "intIndexed[0]"));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.getIndexedProperty(bean, "[0]"));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.getIndexedProperty(bean, "intIndexed"));
     }
 
     /**
@@ -1045,65 +917,14 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getMappedProperty invalid arguments.
      */
     public void testGetMappedArguments() {
-
         // Use explicit key argument
-
-        try {
-            PropertyUtils.getMappedProperty(null, "mappedProperty", "First Key");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getMappedProperty(bean, null, "First Key");
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
-        try {
-            PropertyUtils.getMappedProperty(bean, "mappedProperty", null);
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getMappedProperty(null, "mappedProperty", "First Key"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getMappedProperty(bean, null, "First Key"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getMappedProperty(bean, "mappedProperty", null));
         // Use key expression
-
-        try {
-            PropertyUtils.getMappedProperty(null, "mappedProperty(First Key)");
-            fail("Should throw IllegalArgumentException 4");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 4");
-        }
-
-        try {
-            PropertyUtils.getMappedProperty(bean, "(Second Key)");
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 5");
-        }
-
-        try {
-            PropertyUtils.getMappedProperty(bean, "mappedProperty");
-            fail("Should throw IllegalArgumentException 6");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 6");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getMappedProperty(null, "mappedProperty(First Key)"));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.getMappedProperty(bean, "(Second Key)"));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.getMappedProperty(bean, "mappedProperty"));
     }
 
     /**
@@ -1304,32 +1125,14 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getNestedProperty invalid arguments.
      */
     public void testGetNestedArguments() {
-
-        try {
-            PropertyUtils.getNestedProperty(null, "stringProperty");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getNestedProperty(bean, null);
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getNestedProperty(null, "stringProperty"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getNestedProperty(bean, null));
     }
 
     /**
      * Test getNestedProperty on a boolean property.
      */
     public void testGetNestedBoolean() {
-
         try {
             final Object value = PropertyUtils.getNestedProperty(bean, "nested.booleanProperty");
             assertNotNull("Got a value", value);
@@ -1344,7 +1147,6 @@ public class PropertyUtilsTestCase extends TestCase {
         } catch (final NoSuchMethodException e) {
             fail("NoSuchMethodException");
         }
-
     }
 
     /**
@@ -1828,25 +1630,8 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getSimpleProperty invalid arguments.
      */
     public void testGetSimpleArguments() {
-
-        try {
-            PropertyUtils.getSimpleProperty(null, "stringProperty");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.getSimpleProperty(bean, null);
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getSimpleProperty(null, "stringProperty"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.getSimpleProperty(bean, null));
     }
 
     /**
@@ -2457,14 +2242,13 @@ public class PropertyUtilsTestCase extends TestCase {
             // probably just tried to do
             // map.set("submap(beta2)", betaBean2)
             // which is almost certainly not what the used expected. This is
-            // what beanutils 1.5.0 to 1.7.1 did....
+            // what BeanUtils 1.5.0 to 1.7.1 did....
             fail("Exception not thrown for invalid setNestedProperty syntax");
         } catch (final IllegalArgumentException ex) {
             // ok, getting an exception was expected. As it is of a generic
             // type, let's check the message string to make sure it really
             // was caused by the issue we expected.
-            final int index = ex.getMessage().indexOf("Indexed or mapped properties are not supported");
-            assertTrue("Unexpected exception message", index >= 0);
+            assertTrue("Unexpected exception message", ex.getMessage().contains("Indexed or mapped properties are not supported"));
         }
 
         try {
@@ -2480,7 +2264,7 @@ public class PropertyUtilsTestCase extends TestCase {
             // probably just tried to do
             // map.get("submap[3]")
             // which is almost certainly not what the used expected. This is
-            // what beanutils 1.5.0 to 1.7.1 did....
+            // what BeanUtils 1.5.0 to 1.7.1 did....
             fail("Exception not thrown for invalid setNestedProperty syntax");
         } catch (final IllegalArgumentException ex) {
             // ok, getting an exception was expected. As it is of a generic
@@ -2558,105 +2342,20 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on setIndexedProperty invalid arguments.
      */
     public void testSetIndexedArguments() {
-
         // Use explicit index argument
-
-        try {
-            PropertyUtils.setIndexedProperty(null, "intArray", 0, Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, null, 0, Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(null, "intArray", 0, Integer.valueOf(1)));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(bean, null, 0, Integer.valueOf(1)));
         // Use index expression
-
-        try {
-            PropertyUtils.setIndexedProperty(null, "intArray[0]", Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, "[0]", Integer.valueOf(1));
-            fail("Should throw NoSuchMethodException 4");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 4");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, "intArray", Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 5");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(null, "intArray[0]", Integer.valueOf(1)));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.setIndexedProperty(bean, "[0]", Integer.valueOf(1)));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.setIndexedProperty(bean, "intArray", Integer.valueOf(1)));
         // Use explicit index argument
-
-        try {
-            PropertyUtils.setIndexedProperty(null, "intIndexed", 0, Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, null, 0, Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(null, "intIndexed", 0, Integer.valueOf(1)));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(bean, null, 0, Integer.valueOf(1)));
         // Use index expression
-
-        try {
-            PropertyUtils.setIndexedProperty(null, "intIndexed[0]", Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, "[0]", Integer.valueOf(1));
-            fail("Should throw NoSuchMethodException 4");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 4");
-        }
-
-        try {
-            PropertyUtils.setIndexedProperty(bean, "intIndexed", Integer.valueOf(1));
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 5");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setIndexedProperty(null, "intIndexed[0]", Integer.valueOf(1)));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.setIndexedProperty(bean, "[0]", Integer.valueOf(1)));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.setIndexedProperty(bean, "intIndexed", Integer.valueOf(1)));
     }
 
     /**
@@ -2970,65 +2669,14 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on getMappedProperty invalid arguments.
      */
     public void testSetMappedArguments() {
-
         // Use explicit key argument
-
-        try {
-            PropertyUtils.setMappedProperty(null, "mappedProperty", "First Key", "First Value");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.setMappedProperty(bean, null, "First Key", "First Value");
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
-        try {
-            PropertyUtils.setMappedProperty(bean, "mappedProperty", null, "First Value");
-            fail("Should throw IllegalArgumentException 3");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 3");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setMappedProperty(null, "mappedProperty", "First Key", "First Value"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setMappedProperty(bean, null, "First Key", "First Value"));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setMappedProperty(bean, "mappedProperty", null, "First Value"));
         // Use key expression
-
-        try {
-            PropertyUtils.setMappedProperty(null, "mappedProperty(First Key)", "First Value");
-            fail("Should throw IllegalArgumentException 4");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 4");
-        }
-
-        try {
-            PropertyUtils.setMappedProperty(bean, "(Second Key)", "Second Value");
-            fail("Should throw IllegalArgumentException 5");
-        } catch (final NoSuchMethodException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of NoSuchMethodException 5");
-        }
-
-        try {
-            PropertyUtils.setMappedProperty(bean, "mappedProperty", "Third Value");
-            fail("Should throw IllegalArgumentException 6");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 6");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setMappedProperty(null, "mappedProperty(First Key)", "First Value"));
+        assertThrows(NoSuchMethodException.class, () -> PropertyUtils.setMappedProperty(bean, "(Second Key)", "Second Value"));
+        assertThrows(IllegalArgumentException.class, () -> PropertyUtils.setMappedProperty(bean, "mappedProperty", "Third Value"));
     }
 
     /**
@@ -3093,7 +2741,7 @@ public class PropertyUtilsTestCase extends TestCase {
      */
     public void testSetMappedPeriods() {
 
-        // -------- PropertyUtils.setMappedProperty()--------
+        // PropertyUtils.setMappedProperty()--------
         bean.setMappedProperty("key.with.a.dot", "Special Value");
         assertEquals("Can retrieve directly (A)", "Special Value", bean.getMappedProperty("key.with.a.dot"));
 
@@ -3104,7 +2752,7 @@ public class PropertyUtilsTestCase extends TestCase {
             fail("Thew exception: " + e);
         }
 
-        // -------- PropertyUtils.setNestedProperty() --------
+        // PropertyUtils.setNestedProperty()
         bean.setMappedProperty("key.with.a.dot", "Special Value");
         assertEquals("Can retrieve directly (B)", "Special Value", bean.getMappedProperty("key.with.a.dot"));
         try {
@@ -3114,7 +2762,7 @@ public class PropertyUtilsTestCase extends TestCase {
             fail("Thew exception: " + e);
         }
 
-        // -------- PropertyUtils.setNestedProperty() --------
+        // PropertyUtils.setNestedProperty()
         final TestBean testBean = new TestBean();
         bean.setMappedObjects("nested.property", testBean);
         assertEquals("Can retrieve directly (C)", "This is a string", testBean.getStringProperty());
@@ -3125,7 +2773,7 @@ public class PropertyUtilsTestCase extends TestCase {
             fail("Thew exception: " + e);
         }
 
-        // -------- PropertyUtils.setNestedProperty() --------
+        // PropertyUtils.setNestedProperty()
         bean.getNested().setMappedProperty("Mapped Key", "Nested Mapped Value");
         try {
             assertEquals("Can retrieve via getNestedProperty (D)", "Nested Mapped Value",
@@ -3217,25 +2865,8 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on setNestedProperty invalid arguments.
      */
     public void testSetNestedArguments() {
-
-        try {
-            PropertyUtils.setNestedProperty(null, "stringProperty", "");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.setNestedProperty(bean, null, "");
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setNestedProperty(null, "stringProperty", ""));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setNestedProperty(bean, null, ""));
     }
 
     /**
@@ -3507,25 +3138,8 @@ public class PropertyUtilsTestCase extends TestCase {
      * Corner cases on setSimpleProperty invalid arguments.
      */
     public void testSetSimpleArguments() {
-
-        try {
-            PropertyUtils.setSimpleProperty(null, "stringProperty", "");
-            fail("Should throw IllegalArgumentException 1");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 1");
-        }
-
-        try {
-            PropertyUtils.setSimpleProperty(bean, null, "");
-            fail("Should throw IllegalArgumentException 2");
-        } catch (final IllegalArgumentException e) {
-            // Expected response
-        } catch (final Throwable t) {
-            fail("Threw " + t + " instead of IllegalArgumentException 2");
-        }
-
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setSimpleProperty(null, "stringProperty", ""));
+        assertThrows(NullPointerException.class, () -> PropertyUtils.setSimpleProperty(bean, null, ""));
     }
 
     /**

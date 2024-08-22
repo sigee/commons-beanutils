@@ -53,11 +53,10 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      * Test Converter() constructor
      *
      * Uses the default locale, no default value
-     *
      */
     public void testConstructor_2() {
 
-        // ------------- Construct using default locale ------------
+        // Construct using default locale
         converter = DoubleLocaleConverter.builder().get();
 
         // Perform Tests
@@ -72,11 +71,10 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      * Test Converter(locPattern) constructor
      *
      * Uses the default locale, no default value
-     *
      */
     public void testConstructor_3() {
 
-        // ------------- Construct using localized pattern (default locale) --------
+        // Construct using localized pattern (default locale)
         converter = DoubleLocaleConverter.builder().setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -92,7 +90,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_4() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setLocale(localizedLocale).get();
 
         // Perform Tests
@@ -108,7 +106,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_5() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setLocale(localizedLocale).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -124,7 +122,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_6() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setLocale(localizedLocale).setPattern(defaultDecimalPattern).get();
 
         // Perform Tests
@@ -140,7 +138,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_7() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setLocale(localizedLocale).setPattern(localizedDecimalPattern).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -156,7 +154,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_8() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setDefault(defaultValue).get();
 
         // Perform Tests
@@ -172,7 +170,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructor_9() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = DoubleLocaleConverter.builder().setDefault(defaultValue).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -188,7 +186,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
      */
     public void testConstructorMain() {
 
-        // ------------- Construct with localized pattern ------------
+        // Construct with localized pattern
         converter = DoubleLocaleConverter.builder().setDefault(defaultValue).setLocale(localizedLocale).setPattern(localizedDecimalPattern)
                 .setLocalizedPattern(true).get();
 
@@ -223,7 +221,7 @@ public class DoubleLocaleConverterTestCase extends BaseLocaleConverterTestCase<D
         // **************************************************************************
         // convertValueToType(converter, "(B)", Integer.class, localizedDecimalValue, localizedDecimalPattern, expectedValue);
 
-        // ------------- Construct with non-localized pattern ------------
+        // Construct with non-localized pattern
         converter = DoubleLocaleConverter.builder().setDefault(defaultValue).setLocale(localizedLocale).setPattern(defaultDecimalPattern)
                 .setLocalizedPattern(false).get();
 

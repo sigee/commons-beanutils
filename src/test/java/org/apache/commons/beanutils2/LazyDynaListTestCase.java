@@ -34,7 +34,6 @@ import junit.framework.TestSuite;
  * <p>
  * Test Case for the {@code LazyDynaList}class.
  * </p>
- *
  */
 public class LazyDynaListTestCase extends TestCase {
 
@@ -55,8 +54,8 @@ public class LazyDynaListTestCase extends TestCase {
         return new TestSuite(LazyDynaListTestCase.class);
     }
     protected DynaProperty[] properties = { new DynaProperty(BASIC_PROP1, String.class), new DynaProperty(BASIC_PROP2, HashMap.class) };
-    protected DynaClass treeMapDynaClass = new LazyDynaMap(new TreeMap<String, Object>());
-    protected DynaClass hashMapDynaClass = new LazyDynaMap(new HashMap<String, Object>());
+    protected DynaClass treeMapDynaClass = new LazyDynaMap(new TreeMap<>());
+    protected DynaClass hashMapDynaClass = new LazyDynaMap(new HashMap<>());
 
     protected DynaClass pojoDynaClass = new WrapDynaBean(new TestBean()).getDynaClass();
 
@@ -321,7 +320,7 @@ public class LazyDynaListTestCase extends TestCase {
      */
     public void testCollection(final LazyDynaList list, final Class<?> testClass, final DynaClass testDynaClass, final Object wrongBean) {
 
-        // ----- Create Collection & Array of Maps -----
+        // Create Collection & Array of Maps
         final int size = 5;
         final List<Object> testList = new ArrayList<>(size);
         final TreeMap<?, ?>[] testArray = new TreeMap[size];
@@ -332,7 +331,7 @@ public class LazyDynaListTestCase extends TestCase {
             testList.add(testArray[i]);
         }
 
-        // ----- Create LazyArrayList from Collection -----
+        // Create LazyArrayList from Collection
         LazyDynaList lazyList = new LazyDynaList(testList);
         assertEquals("1. check size", size, lazyList.size());
 
@@ -347,7 +346,7 @@ public class LazyDynaListTestCase extends TestCase {
             assertEquals("5." + i + " Map error ", "val" + i, mapArray[i].get("prop" + i));
         }
 
-        // ----- Create LazyArrayList from Array -----
+        // Create LazyArrayList from Array
         lazyList = new LazyDynaList(testArray);
         assertEquals("6. check size", size, lazyList.size());
 
@@ -422,7 +421,7 @@ public class LazyDynaListTestCase extends TestCase {
      */
     public void testNullType() {
         final LazyDynaList lazyList = new LazyDynaList();
-        lazyList.add(new HashMap<String, Object>());
+        lazyList.add(new HashMap<>());
     }
 
     /**

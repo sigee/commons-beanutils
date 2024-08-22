@@ -116,12 +116,29 @@
       <action dev="ggregory" type="fix" due-to="Gary Gregory">
         Avoid possible NPE in DateTimeConverter.parse(Class, Class, String).
       </action>
+      <action dev="ggregory" type="fix" due-to="Claude Warren, Gary Gregory">
+        Annotate Converter with @FunctionalInterface.
+      </action>
+      <action issue="BEANUTILS-564" dev="ggregory" type="fix" due-to="SingingBush">
+        Fix JDK 21 CI failure due to locale changes #201.
+      </action>
+      <action dev="ggregory" type="fix" due-to="Seth Falco">
+        Fix warnings and To-Dos #92.
+      </action>
+      <action type="fix" dev="ggregory" due-to="Gary Gregory">Replace internal use of Locale.ENGLISH with Locale.ROOT.</action>
+      <action issue="BEANUTILS-541" dev="ggregory" type="fix" due-to="Sergey Chernov">FluentPropertyBeanIntrospector caches corrupted writeMethod (2.x) #68.</action>
       <!-- ADD -->
       <action dev="ggregory" type="add" due-to="Dependabot, Gary Gregory">
         Add github/codeql-action #118.
       </action>
       <action dev="ggregory" type="add" due-to="Dependabot, Gary Gregory">
         Add and use ConversionException.format(String, Object...).
+      </action>
+      <action dev="ggregory" type="add" due-to="Seth Falco, Gary Gregory">
+        Add Converters for additional types: Color, Dimension, InetAddress, Locale, Pattern, Point #47.
+      </action>
+      <action dev="ggregory" type="add" due-to="Sergey Chernov, Gary Gregory">
+        Make PropertyUtilsBean.getReadMethod(Class, PropertyDescriptor) public #232.
       </action>
       <!--  UPDATES -->
       <action dev="ggregory" type="update" due-to="Dependabot, Gary Gregory">
@@ -170,7 +187,7 @@
         Bump BC version from 1.9.3 to 1.9.4.
       </action>
       <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
-        Bump commons-parent from 50 to 64, #135, #152, #156, #171, #172.
+        Bump org.apache.commons:commons-parent from 50 to 73 #229, #245, #254, #264, #274.
       </action>
       <action dev="ggregory" type="update" due-to="Dependabot">
         Bump biz.aQute.bndlib from 5.1.0 to 6.4.1 #29, #45, #79, #109, #119, #121, #147, #175.
@@ -190,11 +207,11 @@
       <action dev="ggregory" type="update" due-to="Dependabot">
         Bump spotbugs from 4.5.3 to 4.6.0.
       </action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons-lang3 from 3.12.0 to 3.14.0.
+      <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
+        Bump org.apache.commons:commons-lang3 from 3.12.0 to 3.16.0 #263, #269.
       </action>
-      <action dev="ggregory" type="update" due-to="Gary Gregory">
-        Bump commons-logging:commons-logging from 1.2 to 1.3.0.
+      <action dev="ggregory" type="update" due-to="Gary Gregory, Dependabot">
+        Bump commons-logging:commons-logging from 1.2 to 1.3.4 #226, #246, #259, #275.
       </action>
     </release>
 

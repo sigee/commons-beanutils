@@ -53,11 +53,10 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      * Test Converter() constructor
      *
      * Uses the default locale, no default value
-     *
      */
     public void testConstructor_2() {
 
-        // ------------- Construct using default locale ------------
+        // Construct using default locale
         converter = LongLocaleConverter.builder().get();
 
         // Perform Tests
@@ -72,11 +71,10 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      * Test Converter(locPattern) constructor
      *
      * Uses the default locale, no default value
-     *
      */
     public void testConstructor_3() {
 
-        // ------------- Construct using localized pattern (default locale) --------
+        // Construct using localized pattern (default locale)
         converter = LongLocaleConverter.builder().setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -92,7 +90,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_4() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setLocale(localizedLocale).get();
 
         // Perform Tests
@@ -108,7 +106,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_5() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setLocale(localizedLocale).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -124,7 +122,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_6() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setLocale(localizedLocale).setPattern(defaultIntegerPattern).get();
 
         // Perform Tests
@@ -140,7 +138,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_7() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setLocale(localizedLocale).setPattern(localizedIntegerPattern).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -156,7 +154,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_8() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setDefault(defaultValue).get();
 
         // Perform Tests
@@ -172,7 +170,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructor_9() {
 
-        // ------------- Construct using specified Locale --------
+        // Construct using specified Locale
         converter = LongLocaleConverter.builder().setDefault(defaultValue).setLocalizedPattern(true).get();
 
         // Perform Tests
@@ -188,7 +186,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
      */
     public void testConstructorMain() {
 
-        // ------------- Construct with localized pattern ------------
+        // Construct with localized pattern
         converter = LongLocaleConverter.builder().setDefault(defaultValue).setLocale(localizedLocale).setPattern(localizedIntegerPattern)
                 .setLocalizedPattern(true).get();
 
@@ -222,7 +220,7 @@ public class LongLocaleConverterTestCase extends BaseLocaleConverterTestCase<Lon
         // **************************************************************************
         // convertValueToType(converter, "(B)", Double.class, localizedIntegerValue, localizedIntegerPattern, expectedValue);
 
-        // ------------- Construct with non-localized pattern ------------
+        // Construct with non-localized pattern
         converter = LongLocaleConverter.builder().setDefault(defaultValue).setLocale(localizedLocale).setPattern(defaultIntegerPattern)
                 .setLocalizedPattern(false).get();
 
