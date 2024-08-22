@@ -796,32 +796,7 @@ public class LocaleBeanUtilsBean extends BeanUtilsBean {
         // Trace logging (if enabled)
         if (LOG.isTraceEnabled()) {
             final StringBuilder sb = new StringBuilder("  setProperty(");
-            sb.append(bean);
-            sb.append(", ");
-            sb.append(name);
-            sb.append(", ");
-            if (value == null) {
-                sb.append("<NULL>");
-            }
-            else if (value instanceof String) {
-                sb.append((String) value);
-            }
-            else if (value instanceof String[]) {
-                final String[] values = (String[]) value;
-                sb.append('[');
-                for (int i = 0; i < values.length; i++) {
-                    if (i > 0) {
-                        sb.append(',');
-                    }
-                    sb.append(values[i]);
-                }
-                sb.append(']');
-            }
-            else {
-                sb.append(value.toString());
-            }
-            sb.append(')');
-            LOG.trace(sb.toString());
+            LOG.trace(traceLogRecord(bean, name, value, sb).toString());;
         }
 
         // Resolve any nested expression to get the actual target bean
