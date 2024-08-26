@@ -1030,7 +1030,7 @@ public class BeanUtilsBean {
      * {@code bean.toString}, property name and property value.</p>
      *
      * <p><strong>When the bean's toString method is override, hide the detail
-     * of value。</strong></p>
+     * of value.</strong></p>
      *
      * @param bean Bean on which setting is to be performed
      * @param name Property name (can be nested/indexed/mapped/combo)
