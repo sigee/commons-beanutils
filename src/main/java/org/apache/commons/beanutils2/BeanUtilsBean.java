@@ -380,7 +380,7 @@ public class BeanUtilsBean {
         // Trace logging (if enabled)
         if (LOG.isTraceEnabled()) {
             final StringBuilder sb = new StringBuilder("  copyProperty(");
-            LOG.trace(traceLogRecord(bean, name, value, sb).toString());;
+            LOG.trace(traceLogRecord(bean, name, value, sb).toString());
         }
 
         // Resolve any nested expression to get the actual target bean
@@ -1035,6 +1035,8 @@ public class BeanUtilsBean {
      * @param bean Bean on which setting is to be performed
      * @param name Property name (can be nested/indexed/mapped/combo)
      * @param value Value to be set
+     * @param sb the start of stringBuilder
+     * @return the value should log as trace
      */
     protected static StringBuilder traceLogRecord(Object bean, String name, Object value, StringBuilder sb) {
         sb.append(bean);
