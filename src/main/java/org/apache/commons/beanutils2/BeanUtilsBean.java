@@ -889,7 +889,7 @@ public class BeanUtilsBean {
         // Trace logging (if enabled)
         if (LOG.isTraceEnabled()) {
             final StringBuilder sb = new StringBuilder("  setProperty(");
-            LOG.trace(traceLogRecord(bean, name, value, sb).toString());;
+            LOG.trace(traceLogRecord(bean, name, value, sb).toString());
         }
 
         // Resolve any nested expression to get the actual target bean
